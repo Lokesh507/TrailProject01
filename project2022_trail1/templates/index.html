@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+    </head>
+
+    <body>
+        <h3>Hello Loki..Welcome to Project 2022 Trail1</h3>
+        <h4>Selected Students from {{c_name}}</h4>
+        <h4>No of Students selected: {{c_len}}</h4>
+        {% if c_len == 0 %}
+        <p>No Selected Students.</p>
+        {% endif %}
+        {% for i in c_data %}
+        <p>{{i.roll_no}}</p>
+        <p>{{i.s_name}}</p>
+        <p>{{i.batch_no}}</p>
+        <hr>
+        {% endfor %}
+    </body>
+
+</html>
