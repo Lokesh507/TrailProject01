@@ -10,8 +10,8 @@
 
     <body>
         <h3>Hello Loki..Welcome to Project 2022 Trail1</h3>
-        <h4>Selected Students from {{c_name}}</h4>
-        <h4>No of Students selected: {{c_len}}</h4>
+        <h3>Given query is: <h2><code>{{command}}</code></h2>
+        </h3>
         {% if c_len == 0 %}
         <p>No Selected Students.</p>
         {% endif %}
@@ -19,7 +19,11 @@
         <p>{{i.roll_no}}</p>
         <p>{{i.s_name}}</p>
         <p>{{i.batch_no}}</p>
+        <p>{{i.salary}}</p>
         <hr>
+        {% endfor %}
+        {% for i in c_data1 %}
+        <p>{{i.roll_no}}</p>
         {% endfor %}
     </body>
 
