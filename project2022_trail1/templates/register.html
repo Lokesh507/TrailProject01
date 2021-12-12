@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Placements Data</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .container {
+                position: relative;
+                width: 100%;
+                min-height: 100vh;
+                background: #1c1c25;
+                overflow: hidden;
+            }
+
+            .container::before {
+                position: absolute;
+                content: '';
+                width: 520px;
+                height: 520px;
+                border-radius: 50%;
+                background: linear-gradient(to botttom);
+                top: -100px;
+                left: -100px;
+                background: #ee0979;
+                /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);
+                /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #ff6a00, #ee0979);
+                /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+            }
+
+            .container::after {
+                position: absolute;
+                content: '';
+                width: 520px;
+                height: 520px;
+                border-radius: 50%;
+                background: -webkit-gradient(linear, botttom, );
+                background: linear-gradient(to botttom);
+                bottom: -70px;
+                right: -70px;
+                background: -webkit-gradient(linear, right top, left top, from(#f00), to(#f0f));
+                background: linear-gradient(to left, #f00, #f0f);
+
+            }
+
+            .container .card {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 70%;
+                height: 400px;
+                z-index: 1;
+                backdrop-filter: blur(7px);
+                padding: 30px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 15px;
+                transition: 0.5s ease-in-out;
+            }
+
+            .container .card .header {
+                width: 100%;
+                height: 50px;
+                justify-content: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container .card .header p {
+                position: relative;
+                width: 150px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                color: #fff;
+            }
+
+            .container .card .header p::before {
+                position: absolute;
+                content: '';
+                width: 100%;
+                height: 5px;
+                bottom: 0;
+                left: 0;
+                animation: animate 7s linear infinite;
+            }
+
+            @keyframes animate {
+                0% {
+                    background: #AE4CCF;
+                }
+
+                50% {
+                    background: #FF6D6D;
+                }
+
+                100% {
+                    background: #E6CCA9;
+                }
+            }
+
+            .card .data {
+                width: 100%;
+                height: 300px;
+                padding: 20px
+            }
+
+            .card .data form {
+                padding: 20px;
+            }
+
+            .card .data form .block1,
+            .card .data form .block2,
+            .card .data form .block3 {
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                height: 50px;
+                margin-bottom: 5px;
+            }
+
+            .card .data form .block1 .tag,
+            .card .data form .block3 .tag {
+                width: 47%;
+                height: 100%;
+            }
+
+            .card .data form .block1 .tag input[type="text"],
+            .card .data form .block2 .tag input[type="text"],
+            .card .data form .block3 .tag input[type="text"] {
+                width: 100%;
+                height: 100%;
+                outline: none;
+                border: none;
+                border-bottom: 2px solid whitesmoke;
+                background: transparent;
+                color: yellow;
+                font-size: 18px;
+            }
+
+            .card .data form .block2 .tag {
+                width: 100%;
+                height: 100%;
+                background: transparent;
+            }
+
+            .btn {
+                width: 100%;
+                height: 40px;
+                position: relative;
+            }
+
+            .btn input {
+                width: 100px;
+                height: 40px;
+                border-radius: 7px;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                font-size: 17px;
+                transition: 0.5s;
+            }
+
+            .btn input:hover {
+                background: transparent;
+                color: #fff;
+                transform: scale(1.1);
+            }
+
+            input::placeholder {
+                color: #fff;
+                font-size: 16px;
+            }
+
+            @media screen and (min-width:320px) and (max-width:426px) {
+                * {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .card {
+                    padding: 0;
+                }
+
+                .card .data {
+                    padding: 0;
+                    margin-top: 10px;
+                }
+
+                .card .data form {
+                    padding: 0;
+                }
+
+                .card .data form .block1,
+                .card .data form .block3 {
+                    flex-direction: column;
+                    width: 100%;
+                    height: 100px;
+                    align-items: baseline;
+                }
+
+                .card .data form .block1 .tag,
+                .card .data form .block3 .tag {
+                    width: 100%;
+                }
+
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="header">
+                    <p>Enter Data</p>
+                </div>
+                <div class="data">
+                    <form action="post_data" method="post">
+                        {% csrf_token %}
+                        <div class="block1">
+                            <div class="tag">
+                                <input type="text" name="reg_no" placeholder="Reg.No">
+                            </div>
+                            <div class="tag">
+                                <input type="text" name="student_name" placeholder="Student Name">
+                            </div>
+                        </div>
+                        <div class="block2">
+                            <div class="tag">
+                                <input type="text" name="company_name" placeholder="Company Name">
+                            </div>
+                        </div>
+                        <div class="block3">
+                            <div class="tag">
+                                <input type="text" placeholder="Batch" name="batch_no">
+                            </div>
+                            <div class="tag">
+                                <input type="text" placeholder="Salary Package" name="package">
+                            </div>
+                        </div>
+                        <div class="btn">
+                            <input type="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

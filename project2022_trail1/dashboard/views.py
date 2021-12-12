@@ -1,8 +1,8 @@
 from django.db import connection
 from django.shortcuts import render
 from re import search
-from .models import Companies, DemoDatabase
-
+from .models import Companies, DemoDatabase, TrailDatabase07
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -56,7 +56,7 @@ def home(request):
     reg_nos = ['18031A0507', '18031A0544', '18031A0505', '18031A0504']
     keywords = ['till', 'until now']
 
-    query_given = "who got the least package till batch 2022?"
+    query_given = "who got placed in wipro with the package above 3.5 till the batch 2022?"
 
     for i in questions:
         if(search(i, query_given)):
@@ -85,19 +85,19 @@ def home(request):
             keyword_keyword = i
             keyword_count = 1
 
-    print(package_keyword)
-
+#    print(package_keyword)
+    print(question_keyword)
     if(question_keyword == 'who'):
         if(company_count == 1 and batch_count == 0 and package_count == 0 and keyword_count == 0):
-            sql_query = "SELECT * FROM dashboard_DemoDatabase where company_name = '{0}' order by roll_no".format(
+            sql_query = "SELECT * FROM dashboard_TrailDatabase07 where company_name = '{0}' order by roll_no".format(
                 company_keyword)
-            sql_output = DemoDatabase.objects.raw(sql_query)
+            sql_output = TrailDatabase07.objects.raw(sql_query)
             sql_len = sql_output.__len__
             return render(request, 'index.html', {'command': query_given, 'c_name': company_keyword, 'c_len': sql_len, 'c_data': sql_output})
         if(batch_count == 1 and company_count == 1 and package_count == 0 and keyword_count == 0):
-            sql_query = "SELECT * FROM dashboard_DemoDatabase where company_name = '{0}' and batch_no = '{1}' order by roll_no".format(
+            sql_query = "SELECT * FROM dashboard_TrailDatabase07 where company_name = '{0}' and batch_no = '{1}' order by roll_no".format(
                 company_keyword, batch_keyword)
-            sql_output = DemoDatabase.objects.raw(sql_query)
+            sql_output = TrailDatabase07.objects.raw(sql_query)
             sql_len = sql_output.__len__
             return render(request, 'index.html', {'command': query_given, 'c_name': company_keyword, 'c_len': sql_len, 'c_data': sql_output})
         if(batch_count == 0 and company_count == 0 and package_count == 1 and keyword_count == 0):
@@ -106,9 +106,9 @@ def home(request):
                     i = str(i)
                     if(search(i, query_given)):
                         no_of_companies = i
-                sql_query = "SELECT * FROM dashboard_DemoDatabase WHERE COMPANIES_COUNT > '{0}' ".format(
+                sql_query = "SELECT * FROM dashboard_TrailDatabase07 WHERE COMPANIES_COUNT > '{0}' ".format(
                     no_of_companies)
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
             if(package_keyword == 'below' or package_keyword == 'less than'):
@@ -116,56 +116,93 @@ def home(request):
                     i = str(i)
                     if(search(i, query_given)):
                         no_of_companies = i
-                sql_query = "SELECT * FROM dashboard_DemoDatabase WHERE COMPANIES_COUNT < '{0}' ".format(
+                sql_query = "SELECT * FROM dashboard_TrailDatabase07 WHERE COMPANIES_COUNT < '{0}' ".format(
                     no_of_companies)
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
             if(package_keyword == 'highest'):
-                sql_query = "select * from dashboard_DemoDatabase where salary=(select max(salary) from dashboard_DemoDatabase)"
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_query = "select * from dashboard_TrailDatabase07 where salary=(select max(salary) from dashboard_TrailDatabase07)"
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
             if(package_keyword == 'least'):
-                sql_query = "select * from dashboard_DemoDatabase where salary=(select min(salary) from dashboard_DemoDatabase)"
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_query = "select * from dashboard_TrailDatabase07 where salary=(select min(salary) from dashboard_TrailDatabase07)"
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
         if(batch_count == 1 and company_count == 0 and package_count == 1 and keyword_count == 0):
             if(package_keyword == 'highest'):
-                sql_query = "SELECT * FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO = '{0}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO = '{0}') ORDER BY ROLL_NO".format(
+                sql_query = "SELECT * FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO = '{0}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO = '{0}') ORDER BY ROLL_NO".format(
                     batch_keyword)
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
             if(package_keyword == 'least'):
-                sql_query = "SELECT * FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO = '{0}' AND SALARY = (SELECT MIN(SALARY) FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO = '{0}') ORDER BY ROLL_NO".format(
+                sql_query = "SELECT * FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO = '{0}' AND SALARY = (SELECT MIN(SALARY) FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO = '{0}') ORDER BY ROLL_NO".format(
                     batch_keyword)
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
         if(batch_count == 1 and company_count == 1 and package_count == 1 and keyword_count == 0):
-            sql_query = "SELECT * FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO = '{0}' AND COMPANY_NAME = '{1}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO = '{0}' AND COMPANY_NAME = '{1}') ORDER BY ROLL_NO".format(
+            sql_query = "SELECT * FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO = '{0}' AND COMPANY_NAME = '{1}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO = '{0}' AND COMPANY_NAME = '{1}') ORDER BY ROLL_NO".format(
                 batch_keyword, company_keyword)
-            sql_output = DemoDatabase.objects.raw(sql_query)
+            sql_output = TrailDatabase07.objects.raw(sql_query)
             sql_len = sql_output.__len__
             return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
         if(batch_count == 1 and keyword_count == 1 and package_count == 1 and company_count == 0):
             if(package_keyword == 'highest'):
-                sql_query = "SELECT * FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO <= '{0}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO <= '{0}') ORDER BY ROLL_NO".format(
+                sql_query = "SELECT * FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO <= '{0}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO <= '{0}') ORDER BY ROLL_NO".format(
                     batch_keyword)
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
             if(package_keyword == 'least'):
-                sql_query = "SELECT * FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO <= '{0}' AND SALARY = (SELECT MIN(SALARY) FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO <= '{0}') ORDER BY ROLL_NO".format(
+                sql_query = "SELECT * FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO <= '{0}' AND SALARY = (SELECT MIN(SALARY) FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO <= '{0}') ORDER BY ROLL_NO".format(
                     batch_keyword)
-                sql_output = DemoDatabase.objects.raw(sql_query)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
         if(batch_count == 1 and keyword_count == 1 and package_count == 1 and company_count == 1):
-            sql_query = "SELECT * FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO <= '{0}' AND  COMPANY_NAME = '{1}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_DEMODATABASE WHERE BATCH_NO <= '{0}'  AND  COMPANY_NAME = '{1}') ORDER BY ROLL_NO".format(
+            sql_query = "SELECT * FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO <= '{0}' AND  COMPANY_NAME = '{1}' AND SALARY = (SELECT MAX(SALARY) FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO <= '{0}'  AND  COMPANY_NAME = '{1}') ORDER BY ROLL_NO".format(
                 batch_keyword, company_keyword)
-            sql_output = DemoDatabase.objects.raw(sql_query)
+            sql_output = TrailDatabase07.objects.raw(sql_query)
             sql_len = sql_output.__len__
             return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
+
+        if(batch_count == 1 and keyword_count == 1 and package_count == 0 and company_count == 1):
+            sql_query = "SELECT * FROM DASHBOARD_TrailDatabase07 WHERE BATCH_NO <= '{0}' AND  COMPANY_NAME = '{1}' ORDER BY ROLL_NO".format(
+                batch_keyword, company_keyword)
+            sql_output = TrailDatabase07.objects.raw(sql_query)
+            sql_len = sql_output.__len__
+            return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
+
+
+def entry(request):
+    if(request.method == "POST"):
+        roll_no = request.POST["reg_no"]
+        student_name = request.POST["student_name"]
+        company_name = request.POST["company_name"]
+        batch_no = request.POST["batch_no"]
+        salary_package = request.POST["package"]
+
+        if(TrailDatabase07.objects.filter(roll_no=roll_no).exists()):
+            print("Founded a Record")
+            sql_query1_first = "SELECT id,max(companies_count) FROM DASHBOARD_TrailDatabase07 WHERE roll_no = '{0}' group by id".format(
+                roll_no)
+            print("Printing.....")
+            for s in TrailDatabase07.objects.raw(sql_query1_first):
+                print(s.companies_count)
+                company_count = s.companies_count + 1
+            TrailDatabase07_obj = TrailDatabase07(
+                roll_no=roll_no, s_name=student_name, company_name=company_name, batch_no=batch_no, salary=salary_package, companies_count=company_count)
+            TrailDatabase07_obj.save()
+        else:
+            print("New Record")
+            company_count = 1
+            TrailDatabase07_obj = TrailDatabase07(
+                roll_no=roll_no, s_name=student_name, company_name=company_name, batch_no=batch_no, salary=salary_package, companies_count=company_count)
+            TrailDatabase07_obj.save()
+        return HttpResponse("Data Submitted Successfully....")
+    else:
+        return render(request, 'register.html')
