@@ -206,3 +206,15 @@ def entry(request):
         return HttpResponse("Data Submitted Successfully....")
     else:
         return render(request, 'register.html')
+
+
+def index_page(request):
+    return render(request, 'home.html')
+
+
+def login_page(request):
+    return render(request, 'login.html')
+
+
+def registration(request):
+    return render(request, 'register.html')
