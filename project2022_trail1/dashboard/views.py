@@ -48,7 +48,8 @@ def index(request):
 
 
 def home(request):
-    companies_name = ['wipro', 'GalaxE Solutions', 'tcs', 'accenture', 'atai']
+    companies_name = ['wipro', 'GalaxE Solutions',
+                      'tcs', 'accenture', 'atai', 'Apps Associates']
     questions = ['who', 'how many', 'which']
     batches = ['2022', '2021', '2020']
     packages = ['more than', 'less than',
@@ -56,7 +57,9 @@ def home(request):
     reg_nos = ['18031A0507', '18031A0544', '18031A0505', '18031A0504']
     keywords = ['till', 'until now']
 
-    query_given = "who got placed in wipro with the package above 3.5 till the batch 2022?"
+    #query_given = "who got placed in wipro with the package above 3.5 till the batch 2022?"
+
+    query_given = request.POST["query"]
 
     for i in questions:
         if(search(i, query_given)):
@@ -86,7 +89,7 @@ def home(request):
             keyword_count = 1
 
 #    print(package_keyword)
-    print(question_keyword)
+    # print(question_keyword)
     if(question_keyword == 'who'):
         if(company_count == 1 and batch_count == 0 and package_count == 0 and keyword_count == 0):
             sql_query = "SELECT * FROM dashboard_TrailDatabase07 where company_name = '{0}' order by roll_no".format(

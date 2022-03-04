@@ -352,7 +352,8 @@
                             package using
                             this search window. </p>
                         <div class="window">
-                            <form action="#" method="post">
+                            <form action="get_data" method="post">
+                                {% csrf_token %}
                                 <div class="data">
                                     <i class="fas fa-search search"></i>
                                     <input type="text" placeholder="Type your query here" name="query" id="query">
