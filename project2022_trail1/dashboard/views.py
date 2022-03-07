@@ -64,6 +64,9 @@ def home(request):
     for i in questions:
         if(search(i, query_given)):
             question_keyword = i
+        else:
+            question_keyword = 'none'
+
     company_count = 0
     for i in companies_name:
         if(search(i, query_given)):
@@ -90,7 +93,7 @@ def home(request):
 
 #    print(package_keyword)
     # print(question_keyword)
-    if(question_keyword == 'who'):
+    if(question_keyword == 'who' or question_keyword == "none" or question_keyword == "which" or question_keyword == "how many"):
         if(company_count == 1 and batch_count == 0 and package_count == 0 and keyword_count == 0):
             sql_query = "SELECT * FROM dashboard_TrailDatabase07 where company_name = '{0}' order by roll_no".format(
                 company_keyword)
@@ -124,12 +127,12 @@ def home(request):
                 sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
-            if(package_keyword == 'highest'):
+            if(package_keyword == 'highest' or package_keyword == "higher"):
                 sql_query = "select * from dashboard_TrailDatabase07 where salary=(select max(salary) from dashboard_TrailDatabase07)"
                 sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
-            if(package_keyword == 'least'):
+            if(package_keyword == 'least' or package_keyword == "lesser"):
                 sql_query = "select * from dashboard_TrailDatabase07 where salary=(select min(salary) from dashboard_TrailDatabase07)"
                 sql_output = TrailDatabase07.objects.raw(sql_query)
                 sql_len = sql_output.__len__
@@ -179,6 +182,38 @@ def home(request):
             sql_output = TrailDatabase07.objects.raw(sql_query)
             sql_len = sql_output.__len__
             return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
+
+        if(batch_count == 0 and company_count == 1 and package_count == 1):
+            if(package_keyword == 'above' or package_keyword == 'more than'):
+                for i in range(1, 50):
+                    i = str(i)
+                    if(search(i, query_given)):
+                        no_of_companies = i
+                sql_query = "SELECT * FROM dashboard_TrailDatabase07 WHERE COMPANIES_COUNT > '{0}' ".format(
+                    no_of_companies)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
+                sql_len = sql_output.__len__
+                return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
+            if(package_keyword == 'below' or package_keyword == 'less than'):
+                for i in range(1, 50):
+                    i = str(i)
+                    if(search(i, query_given)):
+                        no_of_companies = i
+                sql_query = "SELECT * FROM dashboard_TrailDatabase07 WHERE COMPANIES_COUNT < '{0}' ".format(
+                    no_of_companies)
+                sql_output = TrailDatabase07.objects.raw(sql_query)
+                sql_len = sql_output.__len__
+                return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
+            if(package_keyword == 'highest' or package_keyword == "higher"):
+                sql_query = "select * from dashboard_TrailDatabase07 where salary=(select max(salary) from dashboard_TrailDatabase07)"
+                sql_output = TrailDatabase07.objects.raw(sql_query)
+                sql_len = sql_output.__len__
+                return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
+            if(package_keyword == 'least' or package_keyord == "lesser"):
+                sql_query = "select * from dashboard_TrailDatabase07 where salary=(select min(salary) from dashboard_TrailDatabase07)"
+                sql_output = TrailDatabase07.objects.raw(sql_query)
+                sql_len = sql_output.__len__
+                return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
 
 
 def entry(request):
