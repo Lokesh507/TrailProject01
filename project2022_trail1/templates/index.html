@@ -6,26 +6,162 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Trebuchet MS", Arial, sans-serif;
+            }
+
+            .query {
+                width: 100%;
+                border: 1px solid;
+                padding: 7px;
+                margin-top: 30px;
+            }
+
+            .query p {
+                color: #4CAF50;
+                font-weight: bold;
+                font-size: 18px;
+            }
+
+            .query span {
+                color: #000;
+                font-size: 16px;
+            }
+
+            .container {
+                width: 50%;
+                height: fit-content;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border: 3px solid;
+                overflow: auto;
+                border-radius: 10px;
+            }
+
+            #jobs {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #jobs tr:hover {
+                background-color: #ddd;
+            }
+
+            #jobs td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            #jobs tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #jobs th {
+                border: 1px solid #ddd;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            #download-data {
+                width: 250px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                font-size: 16px;
+                border: none;
+                outline: none;
+                background-color: #4CAF50;
+                border-radius: 10px;
+                cursor: pointer;
+                color: #fff;
+                font-weight: bold;
+                position: absolute;
+                bottom: 10%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        </style>
     </head>
 
     <body>
-        <a href="data_form" target="_blank">Fill in details</a>
-        <h3>Hello Loki..Welcome to Project 2022 Trail1</h3>
-        <h3>Given query is: <h2><code>{{command}}</code></h2>
-        </h3>
+        <div class="query">
+            <p>Query Entered: <span>{{command}}</span></p>
+        </div>
         {% if c_len == 0 %}
         <p>No Selected Students.</p>
         {% endif %}
-        {% for i in c_data %}
-        <p>{{i.roll_no}}</p>
-        <p>{{i.s_name}}</p>
-        <p>{{i.batch_no}}</p>
-        <p>{{i.salary}}</p>
-        <hr>
-        {% endfor %}
-        {% for i in c_data1 %}
-        <p>{{i.roll_no}}</p>
-        {% endfor %}
+        <div class="container">
+            <table id="jobs">
+                <tr>
+                    <th>Reg.no</th>
+                    <th>Name</th>
+                    <th>Company Name</th>
+                    <th>Passed out Batch</th>
+                    <th>Package</th>
+                </tr>
+                {% for student in c_data %}
+                <tr>
+                    <td>{{student.roll_no}}</td>
+                    <td>{{student.s_name}}</td>
+                    <td>{{student.company_name}}</td>
+                    <td>{{student.batch_no}}</td>
+                    <td>{{student.salary}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <button id="download-data">Export Data to CSV file</button>
     </body>
+    <script>
+        function htmlToCSV(html, filename) {
+            var data = [];
+            var rows = document.querySelectorAll("table tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++) {
+                    row.push(cols[j].innerText);
+                }
+
+                data.push(row.join(","));
+            }
+
+            downloadCSVFile(data.join("\n"), filename);
+        }
+        function downloadCSVFile(csv, filename) {
+            var csv_file, download_link;
+
+            csv_file = new Blob([csv], { type: "text/csv" });
+
+            download_link = document.createElement("a");
+
+            download_link.download = filename;
+
+            download_link.href = window.URL.createObjectURL(csv_file);
+
+            download_link.style.display = "none";
+
+            document.body.appendChild(download_link);
+
+            download_link.click();
+        }
+        document.getElementById("download-data").addEventListener("click",
+            function () {
+                var html = document.querySelector("table").outerHTML;
+                htmlToCSV(html, "students.csv");
+            })
+    </script>
 
 </html>

@@ -239,23 +239,23 @@
                         {% csrf_token %}
                         <div class="block1">
                             <div class="tag">
-                                <input type="text" name="reg_no" placeholder="Reg.No">
+                                <input type="text" name="reg_no" placeholder="Reg.No" required>
                             </div>
                             <div class="tag">
-                                <input type="text" name="student_name" placeholder="Student Name">
+                                <input type="text" name="student_name" placeholder="Student Name" required>
                             </div>
                         </div>
                         <div class="block2">
                             <div class="tag">
-                                <input type="text" name="company_name" placeholder="Company Name">
+                                <input type="text" name="company_name" placeholder="Company Name" required>
                             </div>
                         </div>
                         <div class="block3">
                             <div class="tag">
-                                <input type="text" placeholder="Batch" name="batch_no">
+                                <input type="text" placeholder="Batch" name="batch_no" required>
                             </div>
                             <div class="tag">
-                                <input type="text" placeholder="Salary Package" name="package">
+                                <input type="text" placeholder="Salary Package" name="package" required>
                             </div>
                         </div>
                         <div class="btn">
