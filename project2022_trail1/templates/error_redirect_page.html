@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Error Page</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Trebuchet MS", Arial, sans-serif;
+            }
+
+            .container {
+                width: 70%;
+                padding: 20px;
+                height: 300px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border: 1px solid;
+                border-radius: 10px;
+            }
+
+            .query {
+                width: 100%;
+                height: 50px;
+                line-height: 50px;
+                border-bottom: 3px dotted #4CAF50;
+            }
+
+            .query p {
+                color: #4CAF50;
+                font-weight: bold;
+                font-size: 18px;
+            }
+
+            .query span {
+                color: #000;
+                font-size: 16px;
+            }
+
+            .card {
+                margin-top: 20px;
+                width: 100%;
+                height: 150px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+            }
+
+            .card p span {
+                color: red;
+            }
+
+            .card p .inner-span {
+                color: #4CAF50;
+            }
+
+            @media screen and (max-width:768px) {
+                .container {
+                    width: 90%;
+                    height: 400px;
+                }
+
+                .container .card {
+                    width: 100%;
+                    height: 300px;
+                }
+
+                .container .card p {
+                    height: 70px;
+                    text-align: justify;
+                    padding: 7px;
+                }
+
+                .container .card p:nth-child(1) {
+                    height: 30px;
+                }
+            }
+
+            #home-button {
+                text-decoration: none;
+                width: 250px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                font-size: 16px;
+                border: none;
+                outline: none;
+                background-color: #4CAF50;
+                border-radius: 10px;
+                cursor: pointer;
+                color: #fff;
+                font-weight: bold;
+                position: absolute;
+                bottom: 10%;
+                left: 50%;
+                transform: translateX(-50%);
+                transition: 0.5s;
+            }
+
+            #home-button:hover {
+                background-color: transparent;
+                font-size: 20px;
+                color: #000;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="query">
+                <p>Query Entered: <span>{{query}}</span></p>
+            </div>
+            <div class="card">
+                <p>If your query consists of:</p>
+                <p>1. <span>Registration Number</span>-- Then enter the Registration Number in <span
+                        class="inner-span">Upper Case
+                        Letters</span> only.
+                </p>
+                <p>2. <span>Company Name</span>-- Then enter the Company Name in <span class="inner-span">Lower Case
+                        Letters</span> only.
+                </p>
+            </div>
+        </div>
+        <a href="home-page" id="home-button">Go to Home page</a>
+    </body>
+
+</html>

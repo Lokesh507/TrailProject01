@@ -278,9 +278,9 @@ def home(request):
                 sql_len = sql_output.__len__
                 print("Loop Executed17.....")
                 return render(request, 'index.html', {'command': query_given, 'c_len': sql_len, 'c_data': sql_output})
-    else:
-        print("No Loop executed")
-        return HttpResponseRedirect('/')
+        else:
+            print("No Loop executed")
+            return render(request,'error_redirect_page.html',{'query':query_given})
 
 
 def entry(request):

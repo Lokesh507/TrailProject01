@@ -192,6 +192,13 @@
                 font-size: 16px;
             }
 
+            .data .block3 .select {
+                border-radius: 7px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+
             @media screen and (min-width:320px) and (max-width:426px) {
                 * {
                     margin: 0;
@@ -225,6 +232,49 @@
                 }
 
             }
+
+            #error {
+                color: #fff;
+                position: absolute;
+                bottom: 20px;
+                width: 100%;
+                z-index: 1;
+            }
+
+            #error #myList {
+                width: 100%;
+                height: fit-content;
+                color: red;
+                font-weight: 700;
+                background-color: #fff;
+                visibility: hidden;
+            }
+
+            #home-button {
+                text-decoration: none;
+                width: 250px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                font-size: 16px;
+                border: none;
+                outline: none;
+                background-color: #4CAF50;
+                border-radius: 10px;
+                cursor: pointer;
+                color: #fff;
+                font-weight: bold;
+                position: absolute;
+                bottom: 10%;
+                left: 50%;
+                transform: translateX(-50%);
+                transition: 0.5s;
+            }
+
+            #home-button:hover {
+                background-color: transparent;
+                font-size: 20px;
+            }
         </style>
     </head>
 
@@ -235,11 +285,11 @@
                     <p>Enter Data</p>
                 </div>
                 <div class="data">
-                    <form action="post_data" method="post">
+                    <form action="post_data" id="form" method="post" onsubmit="return fun()">
                         {% csrf_token %}
                         <div class="block1">
                             <div class="tag">
-                                <input type="text" name="reg_no" placeholder="Reg.No" required>
+                                <input type="text" name="reg_no" id="reg_no" placeholder="Reg.No" required>
                             </div>
                             <div class="tag">
                                 <input type="text" name="student_name" placeholder="Student Name" required>
@@ -247,13 +297,24 @@
                         </div>
                         <div class="block2">
                             <div class="tag">
-                                <input type="text" name="company_name" placeholder="Company Name" required>
+                                <input type="text" name="company_name" id="company_name" placeholder="Company Name"
+                                    required>
                             </div>
                         </div>
                         <div class="block3">
-                            <div class="tag">
-                                <input type="text" placeholder="Batch" name="batch_no" required>
-                            </div>
+                            <select name="batch_no" id="batch_no" class="tag select">
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
+                                <option value="2030">2030</option>
+                            </select>
                             <div class="tag">
                                 <input type="text" placeholder="Salary Package" name="package" required>
                             </div>
@@ -264,7 +325,40 @@
                     </form>
                 </div>
             </div>
+            <div id="error">
+                <ul id="myList">
+                    <li style="text-decoration: underline;">Errors:</li>
+                </ul>
+            </div>
         </div>
+        <a href="home-page" id="home-button">Go to Home page</a>
+
+
+        <script>
+            function fun() {
+                var returnval = true;
+                var roll_no = document.getElementById("reg_no");
+                var company_name = document.getElementById("company_name");
+                if (roll_no.value === roll_no.value.toLowerCase()) {
+                    //document.getElementById("error").innerHTML += "Roll no cannot be in lower case letters.";
+                    const node = document.createElement("li");
+                    const textnode = document.createTextNode("Roll no cannot be in lower case letters.");
+                    node.appendChild(textnode);
+                    document.getElementById("myList").appendChild(node);
+                    document.getElementById("myList").style.visibility = "visible";
+                    returnval = false;
+                }
+                if ((company_name.value === company_name.value.toUpperCase()) || (company_name.value.charAt(0) === company_name.value.charAt(0).toUpperCase())) {
+                    const node = document.createElement("li");
+                    const textnode = document.createTextNode("Company Name should be in lower case letters only.");
+                    node.appendChild(textnode);
+                    document.getElementById("myList").appendChild(node);
+                    document.getElementById("myList").style.visibility = "visible";
+                    returnval = false;
+                }
+                return returnval;
+            }
+        </script>
     </body>
 
 </html>
